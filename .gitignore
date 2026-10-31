@@ -1,0 +1,11 @@
+node_modules/
+client/node_modules/
+server/node_modules/
+client/dist/
+server/.env
+.env
+server/data.json
+server/data.json.tmp
+*.log
+server/data.json.migrated-*
+server/data.json.corrupt-*

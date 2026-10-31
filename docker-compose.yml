@@ -1,0 +1,28 @@
+services:
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    ports: ["127.0.0.1:27017:27017"]
+    volumes: ["mongo_data:/data/db"]
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    ports: ["127.0.0.1:6379:6379"]
+    volumes: ["redis_data:/data"]
+  # Optional: run the whole app in Docker ->  docker compose --profile app up -d --build
+  # Reads server/.env; MongoDB/Redis addresses are overridden to the services above.
+  app:
+    profiles: ["app"]
+    build: .
+    restart: unless-stopped
+    env_file: ./server/.env
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/gmail_mailer
+      REDIS_URL: redis://redis:6379
+      CLIENT_URL: http://localhost:5000
+    depends_on: [mongodb, redis]
+    ports: ["127.0.0.1:5000:5000"]
+volumes:
+  mongo_data:
+  redis_data:

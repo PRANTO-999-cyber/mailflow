@@ -1,0 +1,18 @@
+{
+  "name": "gmail-mailer-platform",
+  "version": "1.6.0",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --include=dev && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "build": "npm run build --prefix client",
+    "start": "npm start --prefix server",
+    "check": "npm run check --prefix server",
+    "test": "node --test server/test/*.test.js",
+    "doctor": "npm run doctor --prefix server",
+    "owner-token": "npm run owner-token --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
